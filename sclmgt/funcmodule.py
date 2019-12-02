@@ -233,7 +233,7 @@ def question_builder():
         if 'Para' in answer['question_types']:
 
             clear()
-            print(colored("MCQ Questions", 'red'))
+            print(colored("Para Questions", 'red'))
             q = [
                 {
                     'type':'input',
@@ -269,21 +269,37 @@ def question_builder():
                     }
                 ]
                 ques = PyInquirer.prompt(q, style=custom_style_1)
+                ques['question'] = ques['question'][31:]
                 
                 q = [
                     {
                         'type': 'input',
-                        'name': 'keywords',
-                        'message': 'Enter the amount of keywords',
+                        'name': 'quantity',
+                        'message': 'Enter the amount of keywords:',
                         'validate': lambda x: x.isdigit()
                     }
                 ]
-                
-                dic = {str(ans['answer']): {'marks': marks['marks'], 'choices': choices}}
+                ans = PyInquirer.prompt(q, style=custom_style_1)
+
+                keywords = []
+
+                for i in range(1, int(ans['quantity']) + 1):
+                    q = [
+                        {
+                            'type': 'input',
+                            'name': 'keyword',
+                            'message': 'Enter the keyword:'
+                        }
+                    ]
+                    kw = PyInquirer.prompt(q, style=custom_style_1)
+                    keywords.append(kw['keyword'])
+
+
+                dic = {'marks': marks['marks'], 'keywords': keywords}
                 para_questions[ques['question']] = dic
                 total_marks += int(marks['marks'])
-            questions.append(para_questions)
-            print(para_questions)
+            questions.append({"Para": para_questions})
+        print(questions)
 
     except KeyError:
         pass

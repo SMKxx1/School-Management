@@ -182,6 +182,7 @@ from examples import custom_style_2, custom_style_1, custom_style_3
 #     },
 # ]
 
+# Editor
 # questions = [
 #     {
 #         'type': 'editor',
@@ -195,14 +196,15 @@ from examples import custom_style_2, custom_style_1, custom_style_3
 #     }
 # ]
 
-questions = [
-                    {
-                        'type': 'input',
-                        'name': 'keywords',
-                        'message': 'Enter the amount of keywords',
-                        'validate': lambda x: x.isdigit()
-                    }
-                ]
+# Validate
+# questions = [
+#                     {
+#                         'type': 'input',
+#                         'name': 'keywords',
+#                         'message': 'Enter the amount of keywords',
+#                         'validate': lambda x: x.isdigit()
+#                     }
+#                 ]
 
 answers = PyInquirer.prompt(questions, style=custom_style_3)
 print(answers)
