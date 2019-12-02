@@ -123,9 +123,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Cheatsheet
 PyInquirer_cheatsheet.py
-
-# Test file
-test.py
