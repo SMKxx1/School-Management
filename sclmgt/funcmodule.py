@@ -449,8 +449,8 @@ def std_login():
                 print("Invalid Username or Password. Try again")
                 input()
             else:
-                colores = ['red','blue','green','cyan','yellow','grey','white']
-                random_color = colores[random.randint(0,6)]
+                colores = ['red','blue','green','cyan','yellow','white']
+                random_color = colores[random.randint(0,5)]
                 cprint(asci('W e l c o m e B a c k ! ! !', '3-d'), random_color)
                 c.execute(f"update students_account set log = log + 1 where email = '{email}';")
                 conn.commit()
@@ -503,8 +503,8 @@ def teacher_login():
 
 def teacher_function(subject):
     clear()
-    colores = ['red','blue','green','cyan','yellow','grey','white']
-    random_color = colores[random.randint(0,6)]
+    colores = ['red','blue','green','cyan','yellow','white']
+    random_color = colores[random.randint(0,5)]
     cprint(asci('W e l c o m e B a c k ! ! !', '3-d'), random_color)
     try:
         while True:
