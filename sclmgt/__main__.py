@@ -1,4 +1,3 @@
-import sys
 from .funcmodule import *
 import PyInquirer
 from examples import custom_style_1
@@ -31,10 +30,13 @@ def main():
                 new_user()
                 clear()
             else:
-                break
+                sys.exit()
+
     except KeyError:
         pass
+
     except KeyboardInterrupt:
         pass
+
 if __name__ == '__main__':
     main()

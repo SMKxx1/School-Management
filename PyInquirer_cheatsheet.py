@@ -126,7 +126,7 @@ from examples import custom_style_2, custom_style_1, custom_style_3
 #     {
 #         'type': 'confirm',
 #         'name': 'pizza',
-#         'message': 'Ok... Do you like pizza?',
+#         'message': 'Ok... Do you like pizza?'[],
 #         'default': False,  # only for demo :)
 #         'when': lambda answers: not answers['bacon']
 #     },
