@@ -871,3 +871,4 @@ def graph(marks, total_marks):
         }
     plt.title(f"Marks scored: {marks} out of {total_marks}", fontdict=font)
     plt.show()
+    
