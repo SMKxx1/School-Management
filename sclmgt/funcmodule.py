@@ -13,12 +13,14 @@ from pyfiglet import figlet_format as asci
 from examples import custom_style_1, custom_style_2, custom_style_3
 import random
 from tabulate import tabulate
+import matplotlib.pyplot as plt
 
 def clear():
     if platform.system() == 'Windows':
         os.system('cls')
     else:
         os.system('clear')
+
 
 conn = pymysql.connect(
     host = "localhost",
@@ -30,22 +32,18 @@ conn = pymysql.connect(
 
 c = conn.cursor()
 
+
 def encoder(password):
     password = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
     password = password.decode()
     return password
+
 
 def scrambled(orig):
     dest = orig[:]
     random.shuffle(dest)
     return dest
 
-def std_code():
-    salt = bcrypt.gensalt().decode()
-    all_salt = pandas.read_sql("select std_code from students_account;", conn)
-    while salt not in all_salt:
-        salt = bcrypt.gensalt().decode()
-    return salt
 
 def student_verification(email):
     find_user = (f"select * from students_account where email like '{email}';")
@@ -59,10 +57,12 @@ def student_verification(email):
     else:
         return True
 
+
 def students_pass_verify(email, password):
     c.execute(f"select password from students_account where email = '{email}';")
     check = tuple(c.fetchone())[0]
     return bcrypt.checkpw(password.encode(), check.encode())   
+
 
 def teacher_verification(email):
     find_user = (f"select * from teachers_account where email like '{email}';")
@@ -76,10 +76,12 @@ def teacher_verification(email):
     else:
         return True
 
+
 def teacher_pass_verify(email, password):
     c.execute(f"select password from teachers_account where email = '{email}';")
     check = tuple(c.fetchone())[0]
     return bcrypt.checkpw(password.encode(), check.encode())    
+
 
 def new_user():
     clear()
@@ -147,6 +149,7 @@ def new_user():
 
     except KeyboardInterrupt:
         print()
+
 
 def question_builder():
     try:
@@ -414,6 +417,7 @@ def question_builder():
     except KeyError:
         pass
 
+
 def std_login():
     c = conn.cursor()
     try:
@@ -460,6 +464,7 @@ def std_login():
 
     except KeyboardInterrupt:
         clear()
+
 
 def std_function(email, name):
     try:
@@ -759,6 +764,7 @@ def report_card(check_dic):
     footer = {"Questions": "Total", "Type": "","Correct / Wrong": f"{correct_count} / {total_correct}", "Marks Earned": f"{marks} / {total_marks}"}
     df = df.append(footer, ignore_index = True, sort = False)
     print(tabulate(df, headers='keys', tablefmt='fancy_grid', showindex=False))
+    graph(marks, total_marks)
 
 
 def teacher_login():
@@ -800,6 +806,7 @@ def teacher_login():
     
     except KeyError:
         clear()
+
 
 def teacher_function(subject):
     clear()
@@ -853,3 +860,14 @@ def teacher_function(subject):
 
     except KeyError:
         pass
+
+def graph(marks, total_marks):
+    wrong = total_marks - marks
+    plt.pie([wrong, marks], explode=[0.3,0], labels=['Wrong', 'Correct'], autopct='%0.0f%%', colors=['r','g'])
+    font = {'family': 'serif',
+        'color':  'k',
+        'weight': 'normal',
+        'size': 16,
+        }
+    plt.title(f"Marks scored: {marks} out of {total_marks}", fontdict=font)
+    plt.show()
